@@ -93,4 +93,44 @@ describe('Thermostat', function() {
       expect(thermostat.isPsmOn()).toBe(true);
     });
   });
+
+  describe('reset function', function() {
+    it('has a reset function which resets back to 20', function() {
+      for (var i = 0; i < 5; i++) {
+        thermostat.up();
+      }
+      thermostat.reset();
+      expect(thermostat.temperature).toEqual(20)
+    });
+  });
+
+  describe('energy usage', function() {
+    describe('when temperature is below 18 degrees', function() {
+      it('is considered low-usage', function() {
+        for (var i = 0; i < 3; i++) {
+          thermostat.down();
+        }
+        expect(thermostat.energyUsage()).toEqual('low-usage');
+      });
+    });
+
+    describe('when temperature is between 18 and 25 degrees', function() {
+      it('is considered medium-usage', function() {
+        for (var i = 0; i < 4; i++) {
+          thermostat.up();
+        }
+        expect(thermostat.energyUsage()).toEqual('medium-usage');
+      });
+    });
+
+    describe('when temperature is above 25 degrees', function() {
+      it('is considered high-usage', function() {
+        thermostat.switchPsmOff();
+        for (var i = 0; i < 10; i++) {
+          thermostat.up();
+        }
+        expect(thermostat.energyUsage()).toEqual('high-usage');
+      });
+    });
+  });
 });
