@@ -31,7 +31,6 @@ Thermostat.prototype.isMinTemp = function() {
 
 Thermostat.prototype.isPsmOn = function() {
   return this.psmOn === true;
-};
 
 Thermostat.prototype.switchPsmOff = function() {
   this.psmOn = false;
